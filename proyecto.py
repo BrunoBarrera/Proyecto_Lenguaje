@@ -95,9 +95,17 @@ for i in range(len(obj)):
 X_train, X_test, y_train, y_test= train_test_split(X, y, test_size=0.2,random_state=0,shuffle= True)
 
 #Carga del archivo txt a un dataframe para poder almacenarlo y convertirlo en diccionario
-df_dic = pd.read_csv('SEL_full.txt', sep=str("\t"), header=None, names=['Palabra', 'Nula[%]','Baja[%]', 'Media[%]', 'Alta[%]', 'PFA', 'Categoría'], skiprows=1, encoding='utf-8')
-df_dic.drop(['Nula[%]', 'Baja[%]', 'Media[%]', 'Alta[%]'], axis=1, inplace=True)
+# df_dic = pd.read_csv('SEL_full.txt', sep=str("\t"), header=None, names=['Palabra', 'Nula[%]','Baja[%]', 'Media[%]', 'Alta[%]', 'PFA', 'Categoría'], skiprows=1, encoding='utf-8')
+# df_dic.drop(['Nula[%]', 'Baja[%]', 'Media[%]', 'Alta[%]'], axis=1, inplace=True)
 
-#Convertimos a un diccionario
-diccionario = df_dic.to_dict('index')
-print(diccionario)
+# #Convertimos a un diccionario
+# diccionario = df_dic.set_index('Palabra').T.to_dict('list')
+
+# #Guardamos el diccionario en un archivo .pkl
+# with open("Dictionary.pickle", "wb") as tf:
+#     pickle.dump(diccionario,tf)
+
+with open("Dictionary.pickle", "rb") as f:
+    dic = pickle.load(f)
+    
+#print(dic.get("abundancia")[0])
