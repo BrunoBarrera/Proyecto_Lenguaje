@@ -94,13 +94,28 @@ for i in range(len(obj)):
 #Dividimos en train y test
 X_train, X_test, y_train, y_test= train_test_split(X, y, test_size=0.2,random_state=0,shuffle= True)
 
-print(X_train)
-#Carga del archivo txt a un dataframe para poder almacenarlo y convertirlo en diccionario
+# #Carga del archivo txt a un dataframe para poder almacenarlo y convertirlo en diccionario
 # df_dic = pd.read_csv('SEL_full.txt', sep=str("\t"), header=None, names=['Palabra', 'Nula[%]','Baja[%]', 'Media[%]', 'Alta[%]', 'PFA', 'Categoría'], skiprows=1, encoding='utf-8')
 # df_dic.drop(['Nula[%]', 'Baja[%]', 'Media[%]', 'Alta[%]'], axis=1, inplace=True)
+# df_dic['PFA'].apply(lambda x: float(x))
+# palabras_unicas=df_dic.Palabra.unique()
+
+# valores=[]
+# for palabra in palabras_unicas:
+#     positivo=0.0
+#     negativo=0.0
+#     subdf= pd.DataFrame(df_dic[df_dic.Palabra==palabra])
+#     for i in range(len(subdf)):
+#         if str(subdf.iloc[i].Categoría)=="Alegría" or str(subdf.iloc[i].Categoría)=="Sorpresa":
+#             positivo= positivo + subdf.iloc[i].PFA
+#         elif str(subdf.iloc[i].Categoría)=="Enojo" or str(subdf.iloc[i].Categoría)=="Miedo" or str(subdf.iloc[i].Categoría)=="Repulsión" or str(subdf.iloc[i].Categoría)=="Tristeza":
+#             negativo= negativo + subdf.iloc[i].PFA
+#     valores.append([str(palabra), positivo, negativo])
+
+# df_diccionary=pd.DataFrame(valores, columns=['Palabra', 'Positivo', 'Negativo'])
 
 # #Convertimos a un diccionario
-# diccionario = df_dic.set_index('Palabra').T.to_dict('list')
+# diccionario = df_diccionary.set_index('Palabra').T.to_dict('list')
 
 # #Guardamos el diccionario en un archivo .pkl
 # with open("Dictionary.pickle", "wb") as tf:
@@ -109,4 +124,5 @@ print(X_train)
 with open("Dictionary.pickle", "rb") as f:
     dic = pickle.load(f)
     
-#print(dic.get("abundancia")[0])
+# print(dic)
+print(dic.get("alma"))
