@@ -2,6 +2,11 @@ import pandas as pd
 import spacy
 import pickle
 from sklearn.model_selection import train_test_split
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import numpy as np
+import sklearn.metrics as met
+from sklearn.linear_model import LogisticRegression
 
 #-----------------------------------Funciones---------------------------------------
 
@@ -125,4 +130,166 @@ with open("Dictionary.pickle", "rb") as f:
     dic = pickle.load(f)
     
 # print(dic)
-print(dic.get("alma"))
+# for i in dic:
+#     print(i)
+# print(dic.get("alma"))
+
+pliege=1
+Umbral=[]
+
+#Datos de entrenamiento
+i=0
+ValoracionOpinion=[]
+DiferenciaTotal=[]
+X_Diferencia_titulo=[]
+X_Diferencia_opinion=[]
+DifPosOp=[]
+DifNegOp=[]
+Data=[]
+# for opinion in val_set.X_train:
+for opinion in X_train:
+        PalabraDesconocida=0
+        titulo_Positivo=0
+        titulo_Negativo=0
+        opinion_positivo=0
+        opinion_negativo=0
+        #Para los Titulos
+        # print(opinion)
+        for word in opinion[0]:
+            # print(word)
+            try:
+                Sentimiento=dic.get(word)[0]
+                # if(Sentimiento=="Alegría" or Sentimiento =="Sorpresa"): # Alegría y Sorpresa
+                titulo_Positivo+=dic.get(word)[0]
+                # else:                                                   # Enojo Miedo Repulsión Tristeza
+                titulo_Negativo+=dic.get(word)[1]
+            except:
+                PalabraDesconocida+=1
+                # print("No exite esa palabra en el diccionario")
+        #Para las Opiniones
+        for word in opinion[1]:
+            try:
+                Sentimiento=dic.get(word)[1]
+                # if(Sentimiento=="Alegría" or Sentimiento =="Sorpresa"): # Alegría y Sorpresa
+                opinion_positivo+=dic.get(word)[0]
+
+                # else:                                                   # Enojo Miedo Repulsión Tristeza
+                opinion_negativo+=dic.get(word)[1]
+            except:
+                PalabraDesconocida=PalabraDesconocida
+                # PalabraDesconocida+=1
+                # print("No exite esa palabra en el diccionario")
+        
+        # print("Pos:"+str(opinion_positivo))
+        # print("Neg:"+str(opinion_negativo))
+        # Data.append([opinion_positivo,opinion_negativo])
+        Data.append([opinion_positivo,opinion_negativo])
+      
+        i+=1
+        # print("Positivo acumulado:"+str(titulo_Positivo)+", Negativo acumulado:"+str(titulo_Negativo))
+        # print("Tam titulo:"+str(len(opinion[0]))+",  Descpmocido "+str(PalabraDesconocida))
+        X_Diferencia_titulo.append(titulo_Positivo-titulo_Negativo)
+        DifPosOp.append(opinion_positivo-opinion_negativo)
+        DifNegOp.append(opinion_negativo-opinion_positivo)
+        X_Diferencia_opinion.append(opinion_positivo-opinion_negativo)
+        DiferenciaTotal.append((titulo_Positivo-titulo_Negativo)*0.70+(opinion_positivo-opinion_negativo)*0.30)
+        # print("Diferencia Titulo["+str(i)+"]="+str(X_Diferencia_titulo[len(X_Diferencia_titulo) - 1]))
+        # print("Diferencia Opinion["+str(i)+"]="+str(X_Diferencia_opinion[len(X_Diferencia_opinion) - 1]))
+        # print("Palabras Desconocidas: "+str(PalabraDesconocida))
+
+
+# plt.plot(x,y,"o")
+# plt.show()
+kmeans = KMeans(n_clusters= 5)
+label = kmeans.fit_predict(Data)
+clus=[]
+for x,y in zip(Data,label):
+    clus.append([x,y])
+    
+
+#Getting unique labels
+ 
+u_labels = np.unique(label)
+centroids = kmeans.cluster_centers_
+# print(centroids)
+
+# for i in u_labels:
+#     x=[]
+#     y=[]
+#     for point in clus:
+#         if point[1]==i:
+#             x.append(point[0][0])
+#             y.append(point[0][1])
+#     plt.scatter(x , y , label = i)
+# plt.scatter(centroids[:,0] , centroids[:,1] , s = 80, color = 'k')
+# plt.legend()
+# plt.show()
+
+#Getting the Centroids
+for cen in centroids:
+    Umbral.append(cen[0]-cen[1])
+Umbral.sort()
+print(Umbral)
+#plotting the results
+# plt.scatter(filtered_label0[:,0] , filtered_label0[:,1])
+# plt.show()
+# kmeans = KMeans(n_clusters=5, random_state=0, n_init="auto").fit(Data)
+    #Prediccion
+    #val_set.y_train
+    #Entrenamiento algoritmo optimizacion 
+    
+    #Valuacion de algoritmo de optimizacion
+        #val_set.X_test
+        #val_set.y_test
+
+        #Asignar Valoracion por umbral
+pliege+=1
+# Umbral=[-0.5,-0.2,0,0.2,0.5]
+clf = LogisticRegression()
+clf.fit(Data, y_train)
+Data2=[]
+DiferenciaTotal=[]
+i=0
+for opinion in X_test:
+        PalabraDesconocida=0
+        titulo_Positivo=0
+        titulo_Negativo=0
+        opinion_positivo=0
+        opinion_negativo=0
+        for word in opinion[0]:
+            try:
+                Sentimiento=dic.get(word)[0]
+                titulo_Positivo+=dic.get(word)[0]
+                titulo_Negativo+=dic.get(word)[1]
+            except:
+                PalabraDesconocida+=1
+        for word in opinion[1]:
+            try:
+                Sentimiento=dic.get(word)[1]
+                opinion_positivo+=dic.get(word)[0]
+                opinion_negativo+=dic.get(word)[1]
+            except:
+                PalabraDesconocida=PalabraDesconocida
+        Data2.append([opinion_positivo,opinion_negativo])
+        DiferenciaTotal.append(opinion_positivo-opinion_negativo)
+      
+        i+=1
+y_pred = clf.predict(Data2) 
+i=0
+for df in DiferenciaTotal:
+    if df <= Umbral[0]:
+        ValoracionOpinion.append(5)
+    elif  df <= Umbral[1]:
+        ValoracionOpinion.append(4)
+    elif  df <= Umbral[2]:
+        ValoracionOpinion.append(3)
+    elif  df <= Umbral[3]:
+        ValoracionOpinion.append(2)
+    # elif  df >= Umbral[4]:
+    else:
+        ValoracionOpinion.append(1)
+    # print("Valoracion Predicha Opinion["+str(i)+"]: "+str(ValoracionOpinion[len(ValoracionOpinion) - 1])+", valor real: "+str(y_train[i]))
+    i+=1
+print('Accuracy:',met.accuracy_score(y_test, ValoracionOpinion)) 
+print('Accuracy Logistic:',met.accuracy_score(y_test, y_pred)) 
+
