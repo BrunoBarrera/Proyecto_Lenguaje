@@ -64,7 +64,8 @@ def LematizadorTitulos(titles,nlp):
     return titulos_lematizados
 
 
-def Entrenamiento(X_train):
+# def Entrenamiento(X_train):
+def Entrenamiento(X_train, y_train):
     i=0
     DiferenciaTotal=[]
     X_Diferencia_titulo=[]
@@ -107,8 +108,10 @@ def Entrenamiento(X_train):
                 # print("No exite esa palabra en el diccionario")
         # print("Pos:"+str(opinion_positivo))
         # print("Neg:"+str(opinion_negativo))
-        # Data.append([opinion_positivo,opinion_negativo,val_set.y_train])
+        # val_set.y_train
+        # Data.append([opinion_positivo,opinion_negativo,y_train])
         Data.append([opinion_positivo,opinion_negativo])
+        
         i+=1
         # print("Positivo acumulado:"+str(titulo_Positivo)+", Negativo acumulado:"+str(titulo_Negativo))
         # print("Tam titulo:"+str(len(opinion[0]))+",  Descpmocido "+str(PalabraDesconocida))
@@ -121,6 +124,25 @@ def Entrenamiento(X_train):
         # print("Diferencia Opinion["+str(i)+"]="+str(X_Diferencia_opinion[len(X_Diferencia_opinion) - 1]))
         # print("Palabras Desconocidas: "+str(PalabraDesconocida))
     return Data,DiferenciaTotal,X_Diferencia_opinion
+
+
+def Evaluador(Diferencia):
+    i=0
+    ValoracionOpinion=[]
+    for df in Diferencia:
+        if df <= Umbral[0]:
+            ValoracionOpinion.append(1)
+        elif  df <= Umbral[1]:
+            ValoracionOpinion.append(2)
+        elif  df <= Umbral[2]:
+            ValoracionOpinion.append(3)
+        elif  df <= Umbral[3]:
+            ValoracionOpinion.append(4)
+        else:
+            ValoracionOpinion.append(5)
+        # print("Valoracion Predicha Opinion["+str(i)+"]: "+str(ValoracionOpinion[len(ValoracionOpinion) - 1])+", valor real: "+str(y_train[i]))
+        i+=1
+    return ValoracionOpinion
 #----------------------------------Inicio----------------------------------
 
 #Esta parte solo es para tokenizar y lematizar el corpus y despues guardar los resultados en un pickle
@@ -213,7 +235,7 @@ with open("Dictionary.pickle", "rb") as f:
 
 UmbralFinal=[]
 
-##########################          Pliegues         ##########################
+##########################        Pliegues       ##########################
 validation_sets = []
 kf = KFold(n_splits=3)
 c=0
@@ -236,7 +258,7 @@ for val_set in my_data_set.validation_set:
     print("Pliegue ",pliege)
     Umbral=[]
     #Datos de entrenamiento
-    Data,DiferenciaTotal,X_Diferencia_opinion=Entrenamiento(val_set.X_train)
+    Data,DiferenciaTotal,X_Diferencia_opinion=Entrenamiento(val_set.X_train,val_set.y_train)
     #Kmeans
     kmeans = KMeans(n_clusters= 5)
     label = kmeans.fit_predict(Data)
@@ -248,30 +270,15 @@ for val_set in my_data_set.validation_set:
 
     #Obteniedo los centroides y calculando los umbrales
     for cen in centroids:
-        Umbral.append(cen[0]-cen[1])
+        Umbral.append(cen[1])
     Umbral.sort()
 
     print(Umbral)
     UmbralFinal.append(Umbral)
 
     ##########################      PRUEBAS EN PLIEGUES     ##########################
-    Data2,DiferenciaTotal,X_Diferencia_opinion=Entrenamiento(val_set.X_test)
-    ValoracionOpinion=[]
-    i=0
-    for df in X_Diferencia_opinion:
-        if df <= Umbral[0]:
-            ValoracionOpinion.append(5)
-        elif  df <= Umbral[1]:
-            ValoracionOpinion.append(4)
-        elif  df <= Umbral[2]:
-            ValoracionOpinion.append(3)
-        elif  df <= Umbral[3]:
-            ValoracionOpinion.append(2)
-        else:
-            ValoracionOpinion.append(1)
-        # print("Valoracion Predicha Opinion["+str(i)+"]: "+str(ValoracionOpinion[len(ValoracionOpinion) - 1])+", valor real: "+str(y_train[i]))
-        i+=1
-    
+    Data2,DiferenciaTotal,X_Diferencia_opinion=Entrenamiento(val_set.X_test, val_set.y_test)
+    ValoracionOpinion=Evaluador(X_Diferencia_opinion)
     yreal=[]
     for id in val_set.y_test:
         yreal.append(id)
@@ -285,22 +292,9 @@ for umb in UmbralFinal:
         Umbral[i]+=umb[i]
 Umbral/=3
 print("Umbral Final:",Umbral)
-Data2,DiferenciaTotal,X_Diferencia_opinion=Entrenamiento(my_test_set.X_test)
-ValoracionOpinion=[]
-i=0
-for df in X_Diferencia_opinion:
-    if df <= Umbral[0]:
-        ValoracionOpinion.append(5)
-    elif  df <= Umbral[1]:
-        ValoracionOpinion.append(4)
-    elif  df <= Umbral[2]:
-        ValoracionOpinion.append(3)
-    elif  df <= Umbral[3]:
-        ValoracionOpinion.append(2)
-    else:
-        ValoracionOpinion.append(1)
-    # print("Valoracion Predicha Opinion["+str(i)+"]: "+str(ValoracionOpinion[len(ValoracionOpinion) - 1])+", valor real: "+str(y_train[i]))
-    i+=1
+Data2,DiferenciaTotal,X_Diferencia_opinion=Entrenamiento(my_test_set.X_test, my_test_set.y_test)
+ValoracionOpinion=Evaluador(X_Diferencia_opinion)
+
 yreal=[]
 for id in my_test_set.y_test:
         yreal.append(id)
