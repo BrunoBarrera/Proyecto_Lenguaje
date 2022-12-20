@@ -248,7 +248,7 @@ my_data_set = data_set(validation_sets, my_test_set)
 
 #-------------------------------------Entrenamiento--------------------------------------#
 
-# Umbrales obtenidos luego de hacer muchos expereimentos (prueba y error)
+# Umbrales obtenidos luego de hacer muchos experimentos (prueba y error)
 UmbralesFinales=[-0.9, -0.4, -0.2, -0.1, -0.1]
 
 pliegue=1
