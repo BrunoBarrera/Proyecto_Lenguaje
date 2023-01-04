@@ -105,130 +105,122 @@ for i in range(len(obj)):
     if i!=0:
         y_atraccion.append(obj[i][3])
 
+#Dividimos en train y test
+
+#Aqui no ocupo como tal "X_train_atraccion" ni "X_test_atraccion" por que tienen lo mismo que "X_train_polaridad" Y "X_test_polaridad", 
+#pero necesitaba guardar por separado las "y" de atraccion y las "y" de polaridad
 
 
+X_train_polaridad, X_test_polaridad, y_train_polaridad, y_test_polaridad= train_test_split(X, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
+X_train_atraccion, X_test_atraccion, y_train_atraccion, y_test_atraccion= train_test_split(X, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
 
-# X_train_polaridad, X_test_polaridad, y_train_polaridad, y_test_polaridad= train_test_split(X, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
-# X_train_atraccion, X_test_atraccion, y_train_atraccion, y_test_atraccion= train_test_split(X, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
-
-# y_train_polaridad=np.array(y_train_polaridad)
-# y_test_polaridad=np.array(y_test_polaridad)
-# y_train_atraccion=np.array(y_train_atraccion)
-# y_test_atraccion=np.array(y_test_atraccion)
+y_train_polaridad=np.array(y_train_polaridad)
+y_test_polaridad=np.array(y_test_polaridad)
+y_train_atraccion=np.array(y_train_atraccion)
+y_test_atraccion=np.array(y_test_atraccion)
 
 
-df_train=pd.DataFrame(X) 
+df_train=pd.DataFrame(X_train_polaridad) 
 
 titulos_tmp=df_train.iloc[:, 0]
-titulos=[]
+titulos_train=[]
 for t in titulos_tmp:
     r=" ".join(t)
-    titulos.append(r)
+    titulos_train.append(r)
 
 opiniones_tmp=df_train.iloc[:, 1]
-opiniones=[]
+opiniones_train=[]
 for o in opiniones_tmp:
     r=" ".join(o)
-    opiniones.append(r)
+    opiniones_train.append(r)
 
-titulos_opiniones=[]
-for t,o in zip(titulos,opiniones):
-    titulos_opiniones.append(t+" "+o)
+titulos_opiniones_train=[]
+for t,o in zip(titulos_train,opiniones_train):
+    titulos_opiniones_train.append(t+" "+o)
 
 
 
-# df_test=pd.DataFrame(X_test_polaridad) 
 
-# titulos_tmp=df_test.iloc[:, 0]
-# titulos_test=[]
-# for t in titulos_tmp:
-#     r=" ".join(t)
-#     titulos_test.append(r)
+df_test=pd.DataFrame(X_test_polaridad) 
 
-# opiniones_tmp=df_test.iloc[:, 1]
-# opiniones_test=[]
-# for o in opiniones_tmp:
-#     r=" ".join(o)
-#     opiniones_test.append(r)
+titulos_tmp=df_test.iloc[:, 0]
+titulos_test=[]
+for t in titulos_tmp:
+    r=" ".join(t)
+    titulos_test.append(r)
 
-# titulos_opiniones_test=[]
-# for t,o in zip(titulos_test,opiniones_test):
-#     titulos_opiniones_test.append(t+" "+o)
+opiniones_tmp=df_test.iloc[:, 1]
+opiniones_test=[]
+for o in opiniones_tmp:
+    r=" ".join(o)
+    opiniones_test.append(r)
 
+titulos_opiniones_test=[]
+for t,o in zip(titulos_test,opiniones_test):
+    titulos_opiniones_test.append(t+" "+o)
+
+
+
+#------------------------------REPRESENTACION BINARIA TRAIN-----------------------------------------
 vectorizador_binario = CountVectorizer(binary=True)
 
-titulos_opiniones_binario = vectorizador_binario.fit_transform(titulos_opiniones)
-X_train_polaridad_binario, X_test_polaridad_binario, y_train_polaridad_binario, y_test_polaridad_binario= train_test_split(titulos_opiniones_binario, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
-X_train_atraccion_binario, X_test_atraccion_binario, y_train_atraccion_binario, y_test_atraccion_binario= train_test_split(titulos_opiniones_binario, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
+#------------CAMBIAR ESTA LINEA PARA SOLUCIONAR LO DEL TAMAÑO DEL PICKLE--------------------
+X_titulos_opiniones_binarizada_train = vectorizador_binario.fit_transform(titulos_opiniones_train)
 
+# X_titulos_opiniones_binarizada_train=X_titulos_opiniones_binarizada_train.toarray()
 
+#----------------------------REPRESENTACION FRECUENCIA TRAIN-----------------------------------------
 vectorizador_frecuencia = CountVectorizer(decode_error='ignore',strip_accents='unicode')
-
-titulos_opiniones_frecuencia = vectorizador_frecuencia.fit_transform(titulos_opiniones)
-X_train_polaridad_frecuencia, X_test_polaridad_frecuencia, y_train_polaridad_frecuencia, y_test_polaridad_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
-X_train_atraccion_frecuencia, X_test_atraccion_frecuencia, y_train_atraccion_frecuencia, y_test_atraccion_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
+X_titulos_opiniones_frecuencia_train = vectorizador_frecuencia.fit_transform(titulos_opiniones_train)
+# X_titulos_opiniones_frecuencia_train=X_titulos_opiniones_frecuencia_train.toarray()
 
 
-# #------------------------------REPRESENTACION BINARIA TRAIN-----------------------------------------
-# vectorizador_binario = CountVectorizer(binary=True)
+#------------------------------REPRESENTACION BINARIA TEST----------------------------------------
+vectorizador_binario = CountVectorizer(binary=True)
 
-# #------------CAMBIAR ESTA LINEA PARA SOLUCIONAR LO DEL TAMAÑO DEL PICKLE--------------------
-# X_titulos_opiniones_binarizada_train = vectorizador_binario.fit_transform(titulos_opiniones_train)
+#------------CAMBIAR ESTA LINEA PARA SOLUCIONAR LO DEL TAMAÑO DEL PICKLE--------------------
+X_titulos_opiniones_binarizada_test = vectorizador_binario.fit_transform(titulos_opiniones_test)
+# X_titulos_opiniones_binarizada_test=X_titulos_opiniones_binarizada_test.toarray()
 
-# # X_titulos_opiniones_binarizada_train=X_titulos_opiniones_binarizada_train.toarray()
+#----------------------------REPRESENTACION FRECUENCIA TEST-----------------------------------------
+vectorizador_frecuencia = CountVectorizer(decode_error='ignore',strip_accents='unicode')
+X_titulos_opiniones_frecuencia_test = vectorizador_frecuencia.fit_transform(titulos_opiniones_test)
+# X_titulos_opiniones_frecuencia_test=X_titulos_opiniones_frecuencia_test.toarray()
 
-# #----------------------------REPRESENTACION FRECUENCIA TRAIN-----------------------------------------
-# vectorizador_frecuencia = CountVectorizer(decode_error='ignore',strip_accents='unicode')
-# X_titulos_opiniones_frecuencia_train = vectorizador_frecuencia.fit_transform(titulos_opiniones_train)
-# # X_titulos_opiniones_frecuencia_train=X_titulos_opiniones_frecuencia_train.toarray()
-
-
-# #------------------------------REPRESENTACION BINARIA TEST----------------------------------------
-# vectorizador_binario = CountVectorizer(binary=True)
-
-# #------------CAMBIAR ESTA LINEA PARA SOLUCIONAR LO DEL TAMAÑO DEL PICKLE--------------------
-# X_titulos_opiniones_binarizada_test = vectorizador_binario.fit_transform(titulos_opiniones_test)
-# # X_titulos_opiniones_binarizada_test=X_titulos_opiniones_binarizada_test.toarray()
-
-# #----------------------------REPRESENTACION FRECUENCIA TEST-----------------------------------------
-# vectorizador_frecuencia = CountVectorizer(decode_error='ignore',strip_accents='unicode')
-# X_titulos_opiniones_frecuencia_test = vectorizador_frecuencia.fit_transform(titulos_opiniones_test)
-# # X_titulos_opiniones_frecuencia_test=X_titulos_opiniones_frecuencia_test.toarray()
-
-# print(np.shape(X_train_polaridad.toarray()))
-# print(np.shape(X_test_polaridad.toarray()))
+# print(np.shape(X_titulos_opiniones_binarizada_train.toarray()))
+# print(np.shape(X_titulos_opiniones_frecuencia_train.toarray()))
 # print(np.shape(X_titulos_opiniones_binarizada_test.toarray()))
 # print(np.shape(X_titulos_opiniones_frecuencia_test.toarray()))
 
-# # with open("X_titulos_opiniones_binarizada_train.pickle", "wb") as f:
-# #     pickle.dump(X_titulos_opiniones_binarizada_train, f) 
+# with open("X_titulos_opiniones_binarizada_train.pickle", "wb") as f:
+#     pickle.dump(X_titulos_opiniones_binarizada_train, f) 
 
-# # with open("X_titulos_opiniones_frecuencia_train.pickle", "wb") as f:
-# #     pickle.dump(X_titulos_opiniones_frecuencia_train, f) 
+# with open("X_titulos_opiniones_frecuencia_train.pickle", "wb") as f:
+#     pickle.dump(X_titulos_opiniones_frecuencia_train, f) 
 
-# # with open("X_titulos_opiniones_frecuencia_test.pickle", "wb") as f:
-# #     pickle.dump(X_titulos_opiniones_frecuencia_test, f) 
+# with open("X_titulos_opiniones_frecuencia_test.pickle", "wb") as f:
+#     pickle.dump(X_titulos_opiniones_frecuencia_test, f) 
 
-# # with open("X_titulos_opiniones_binarizada_test.pickle", "wb") as f:
-# #     pickle.dump(X_titulos_opiniones_binarizada_test, f) 
+# with open("X_titulos_opiniones_binarizada_test.pickle", "wb") as f:
+#     pickle.dump(X_titulos_opiniones_binarizada_test, f) 
 
-# # with open("y_train_polaridad.pickle", "wb") as f:
-# #     pickle.dump(y_train_polaridad, f) 
+# with open("y_train_polaridad.pickle", "wb") as f:
+#     pickle.dump(y_train_polaridad, f) 
 
-# # with open("y_train_atraccion.pickle", "wb") as f:
-# #     pickle.dump(y_train_atraccion, f) 
+# with open("y_train_atraccion.pickle", "wb") as f:
+#     pickle.dump(y_train_atraccion, f) 
 
-# # with open("y_test_polaridad.pickle", "wb") as f:
-# #     pickle.dump(y_test_polaridad, f) 
+# with open("y_test_polaridad.pickle", "wb") as f:
+#     pickle.dump(y_test_polaridad, f) 
 
-# # with open("y_test_atraccion.pickle", "wb") as f:
-# #     pickle.dump(y_test_atraccion, f) 
-
-
+# with open("y_test_atraccion.pickle", "wb") as f:
+#     pickle.dump(y_test_atraccion, f) 
 
 
 
-#----------------------------------AQUI EMPIEZAN LOS ENTRENAMIENTOS------------------
+
+
+# #----------------------------------AQUI EMPIEZAN LOS ENTRENAMIENTOS------------------
 
 # with open("X_titulos_opiniones_binarizada_train.pickle", "rb") as f:
 #     obj = pickle.load(f)
@@ -236,9 +228,9 @@ X_train_atraccion_frecuencia, X_test_atraccion_frecuencia, y_train_atraccion_fre
 # X_titulos_opiniones_binarizada_train=obj
 
 
-# with open("X_titulos_opiniones_frecuencia_train.pickle", "rb") as f:
-#     obj = pickle.load(f)
-# X_titulos_opiniones_frecuencia_train=np.array(obj)
+# # with open("X_titulos_opiniones_frecuencia_train.pickle", "rb") as f:
+# #     obj = pickle.load(f)
+# # X_titulos_opiniones_frecuencia_train=np.array(obj)
 
 
 # with open("y_train_polaridad.pickle", "rb") as f:
@@ -263,16 +255,14 @@ y_test_polaridad_binarizada_v=[]
 y_train_atraccion_binarizada_v=[]
 y_test_atraccion_binarizada_v=[]
 
+for i_train, i_test in kf.split(X_titulos_opiniones_binarizada_train):
+    X_train_binarizada_v.append(X_titulos_opiniones_binarizada_train[i_train])
+    y_train_polaridad_binarizada_v.append(y_train_polaridad[i_train])
+    X_test_binarizada_v.append(X_titulos_opiniones_binarizada_train[i_test])
+    y_test_polaridad_binarizada_v.append(y_train_polaridad[i_test])
 
-
-for i_train, i_test in kf.split(X_train_polaridad_binario):
-    X_train_binarizada_v.append(X_train_polaridad_binario[i_train])
-    y_train_polaridad_binarizada_v.append(np.array(y_train_polaridad_binario)[i_train.astype(int)])
-    X_test_binarizada_v.append(X_train_polaridad_binario[i_test])
-    y_test_polaridad_binarizada_v.append(np.array(y_train_polaridad_binario)[i_test.astype(int)])
-
-    y_train_atraccion_binarizada_v.append(np.array(y_train_atraccion_binario)[i_train.astype(int)])
-    y_test_atraccion_binarizada_v.append(np.array(y_train_atraccion_binario)[i_test.astype(int)])
+    y_train_atraccion_binarizada_v.append(y_train_polaridad[i_train])
+    y_test_atraccion_binarizada_v.append(y_train_polaridad[i_test])
 
 
 X_train_frecuencia_v=[]
@@ -283,14 +273,14 @@ y_test_polaridad_frecuencia_v=[]
 y_train_atraccion_frecuencia_v=[]
 y_test_atraccion_frecuencia_v=[]
 
-for i_train, i_test in kf.split(X_train_polaridad_frecuencia):
-    X_train_frecuencia_v.append(X_train_polaridad_frecuencia[i_train])
-    y_train_polaridad_frecuencia_v.append(np.array(y_train_polaridad_frecuencia)[i_train.astype(int)])
-    X_test_frecuencia_v.append(X_train_polaridad_frecuencia[i_test])
-    y_test_polaridad_frecuencia_v.append(np.array(y_train_polaridad_frecuencia)[i_test.astype(int)])
+for i_train, i_test in kf.split(X_titulos_opiniones_frecuencia_train):
+    X_train_frecuencia_v.append(X_titulos_opiniones_frecuencia_train[i_train])
+    y_train_polaridad_frecuencia_v.append(y_train_polaridad[i_train])
+    X_test_frecuencia_v.append(X_titulos_opiniones_frecuencia_train[i_test])
+    y_test_polaridad_frecuencia_v.append(y_train_polaridad[i_test])
 
-    y_train_atraccion_frecuencia_v.append(np.array(y_train_polaridad_frecuencia)[i_train.astype(int)])
-    y_test_atraccion_frecuencia_v.append(np.array(y_train_polaridad_frecuencia)[i_test.astype(int)])
+    y_train_atraccion_frecuencia_v.append(y_train_polaridad[i_train])
+    y_test_atraccion_frecuencia_v.append(y_train_polaridad[i_test])
 
 
 
@@ -298,13 +288,13 @@ for i_train, i_test in kf.split(X_train_polaridad_frecuencia):
 
 #Empezamos con la polaridad
 
-clf = LogisticRegression(random_state=0,max_iter=1700,C=.82,solver="newton-cg")
+clf = LogisticRegression(random_state=0,max_iter=1000,C=.84)
 
 promedio_accuracy_polaridad=[]
 promedio_precision_polaridad=[]
 promedio_recall_polaridad=[]
 promedio_F_Measure_polaridad=[]
-print("---------------------------REPRESENTACION BINARIZADA---------------------------------\n")
+
 print("---------------------------REGRESION LOGISTICA---------------------------------------\n")
 pliegue=0
 print("---------------------------------POLARIDAD-------------------------------------------\n")
@@ -335,13 +325,12 @@ print("Promedio Recall Polaridad:        {}".format(statistics.mean(promedio_rec
 print("Promedio F-Measure Polaridad:     {}".format(statistics.mean(promedio_F_Measure_polaridad)))
 print("\n")
 #Ahora con la atraccion
+pliegue=0
 promedio_accuracy_atraccion=[]
 promedio_precision_atraccion=[]
 promedio_recall_atraccion=[]
 promedio_F_Measure_atraccion=[]
 pliegue=0
-
-clf = LogisticRegression(random_state=0,max_iter=1200,C=.84)
 print("---------------------------ATRACCION---------------------------------------\n")
 for x_train,y_train,x_test,y_test in zip(X_train_binarizada_v,y_train_atraccion_binarizada_v,X_test_binarizada_v,y_test_atraccion_binarizada_v):
     pliegue+=1
@@ -460,7 +449,7 @@ print("Promedio F-Measure Atraccion:    {}".format(statistics.mean(promedio_F_Me
 
 #-----------------------------REPRESENTACION FRECUENCIA-----------------------------------
 
-clf = LogisticRegression(random_state=0,max_iter=1700,C=.84)
+clf = LogisticRegression(random_state=0,max_iter=900)
 promedio_accuracy_polaridad=[]
 promedio_precision_polaridad=[]
 promedio_recall_polaridad=[]
@@ -498,6 +487,7 @@ print("Promedio Recall Polaridad:        {}".format(statistics.mean(promedio_rec
 print("Promedio F-Measure Polaridad:     {}".format(statistics.mean(promedio_F_Measure_polaridad)))
 print("\n")
 #Ahora con la atraccion
+pliegue=0
 promedio_accuracy_atraccion=[]
 promedio_precision_atraccion=[]
 promedio_recall_atraccion=[]
@@ -510,7 +500,6 @@ promedio_precision_polaridad=[]
 promedio_recall_polaridad=[]
 promedio_F_Measure_polaridad=[]
 
-clf = LogisticRegression(random_state=0,max_iter=1400,C=.84)
 print("---------------------------ATRACCION---------------------------------------\n")
 for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_atraccion_frecuencia_v,X_test_frecuencia_v,y_test_atraccion_frecuencia_v):
     pliegue+=1
@@ -616,11 +605,3 @@ print("\nPromedio Accuracy Atraccion:     {}".format(statistics.mean(promedio_ac
 print("Promedio Precision Atraccion:    {}".format(statistics.mean(promedio_precision_atraccion)))
 print("Promedio Recall Atraccion:       {}".format(statistics.mean(promedio_recall_atraccion)))
 print("Promedio F-Measure Atraccion:    {}".format(statistics.mean(promedio_F_Measure_atraccion)))
-
-#Variance threshold
-#Feature selection
-#Feature union
-#Invariance learning
-#Preproceseamiento
-#Parametros de los modelos
-#Probar otros modelos
