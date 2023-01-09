@@ -80,7 +80,7 @@ def LematizadorTitulos(titles,nlp):
 #     pickle.dump(matriz_OTPA, f)  
 
 
-with open("matriz_opiniones_titulos_polaridades_atracciones.pickle", "rb") as f:
+with open("parte_2\matriz_opiniones_titulos_polaridades_atracciones.pickle", "rb") as f:
     obj = pickle.load(f)
 
 
@@ -329,6 +329,7 @@ for x_train,y_train,x_test,y_test in zip(X_train_binarizada_v,y_train_polaridad_
     print("Recall Polaridad en pliegue {}:       {}".format(pliegue,recall))
     print("F-Measure Polaridad en pliegue {}:    {}".format(pliegue,F_Measure))
     print("\n")
+Mean_FMesure_Bin_LR_Polarity=(clf, "Binarizada", "Regresion logistica", statistics.mean(promedio_F_Measure_polaridad))
 print("Promedio Accuracy Polaridad:      {}".format(statistics.mean(promedio_accuracy_polaridad)))
 print("Promedio Precision Polaridad:     {}".format(statistics.mean(promedio_precision_polaridad)))
 print("Promedio Recall Polaridad:        {}".format(statistics.mean(promedio_recall_polaridad)))
@@ -363,6 +364,7 @@ for x_train,y_train,x_test,y_test in zip(X_train_binarizada_v,y_train_atraccion_
     print("Recall Atraccion en pliegue {}:       {}".format(pliegue,recall))
     print("F-Measure Atraccion en pliegue {}:    {}".format(pliegue,F_Measure))
     print("\n")
+Mean_FMesure_Bin_LR_Atraction=(clf, "Binarizada", "Regresion logistica", statistics.mean(promedio_F_Measure_atraccion))
 print("\nPromedio Accuracy Atraccion:     {}".format(statistics.mean(promedio_accuracy_atraccion)))
 print("Promedio Precision Atraccion:    {}".format(statistics.mean(promedio_precision_atraccion)))
 print("Promedio Recall Atraccion:       {}".format(statistics.mean(promedio_recall_atraccion)))
@@ -414,6 +416,7 @@ for x_train,y_train,x_test,y_test in zip(X_train_binarizada_v,y_train_polaridad_
     print("Recall Polaridad en pliegue {}:       {}".format(pliegue,recall))
     print("F-Measure Polaridad en pliegue {}:    {}".format(pliegue,F_Measure))
     print("\n")
+Mean_FMesure_Bin_NB_Polarity=(clf, "Binarizada", "Naive Bayes", statistics.mean(promedio_F_Measure_polaridad))
 print("\nPromedio Accuracy Polaridad:      {}".format(statistics.mean(promedio_accuracy_polaridad)))
 print("Promedio Precision Polaridad:     {}".format(statistics.mean(promedio_precision_polaridad)))
 print("Promedio Recall Polaridad:        {}".format(statistics.mean(promedio_recall_polaridad)))
@@ -447,6 +450,7 @@ for x_train,y_train,x_test,y_test in zip(X_train_binarizada_v,y_train_atraccion_
     print("Recall Atraccion en pliegue {}:       {}".format(pliegue,recall))
     print("F-Measure Atraccion en pliegue {}:    {}".format(pliegue,F_Measure))
     print("\n")
+Mean_FMesure_Bin_NB_Atraction=(clf, "Binarizada", "Naive Bayes", statistics.mean(promedio_F_Measure_atraccion))
 print("\nPromedio Accuracy Atraccion:     {}".format(statistics.mean(promedio_accuracy_atraccion)))
 print("Promedio Precision Atraccion:    {}".format(statistics.mean(promedio_precision_atraccion)))
 print("Promedio Recall Atraccion:       {}".format(statistics.mean(promedio_recall_atraccion)))
@@ -492,6 +496,7 @@ for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_polaridad_
     print("Recall Polaridad en pliegue {}:       {}".format(pliegue,recall))
     print("F-Measure Polaridad en pliegue {}:    {}".format(pliegue,F_Measure))
     print("\n")
+Mean_FMesure_Freq_LR_Polarity=(clf, "Frecuencial", "Regresion Logistica", statistics.mean(promedio_F_Measure_polaridad))
 print("Promedio Accuracy Polaridad:      {}".format(statistics.mean(promedio_accuracy_polaridad)))
 print("Promedio Precision Polaridad:     {}".format(statistics.mean(promedio_precision_polaridad)))
 print("Promedio Recall Polaridad:        {}".format(statistics.mean(promedio_recall_polaridad)))
@@ -510,7 +515,7 @@ promedio_precision_polaridad=[]
 promedio_recall_polaridad=[]
 promedio_F_Measure_polaridad=[]
 
-clf = LogisticRegression(random_state=0,max_iter=1400,C=.84)
+clf = LogisticRegression(random_state=0,max_iter=1700,C=.84)
 print("---------------------------ATRACCION---------------------------------------\n")
 for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_atraccion_frecuencia_v,X_test_frecuencia_v,y_test_atraccion_frecuencia_v):
     pliegue+=1
@@ -532,6 +537,7 @@ for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_atraccion_
     print("Recall Atraccion en pliegue {}:       {}".format(pliegue,recall))
     print("F-Measure Atraccion en pliegue {}:    {}".format(pliegue,F_Measure))
     print("\n")
+Mean_FMesure_Freq_LR_Atraction=(clf, "Frecuencial", "Regresion Logistica", statistics.mean(promedio_F_Measure_atraccion))
 print("\nPromedio Accuracy Atraccion:     {}".format(statistics.mean(promedio_accuracy_atraccion)))
 print("Promedio Precision Atraccion:    {}".format(statistics.mean(promedio_precision_atraccion)))
 print("Promedio Recall Atraccion:       {}".format(statistics.mean(promedio_recall_atraccion)))
@@ -579,6 +585,7 @@ for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_polaridad_
     print("Recall Polaridad en pliegue {}:       {}".format(pliegue,recall))
     print("F-Measure Polaridad en pliegue {}:    {}".format(pliegue,F_Measure))
     print("\n")
+Mean_FMesure_Freq_NB_Polarity=(clf, "Frecuencial", "Naive Bayes", statistics.mean(promedio_F_Measure_polaridad))
 print("\nPromedio Accuracy Polaridad:      {}".format(statistics.mean(promedio_accuracy_polaridad)))
 print("Promedio Precision Polaridad:     {}".format(statistics.mean(promedio_precision_polaridad)))
 print("Promedio Recall Polaridad:        {}".format(statistics.mean(promedio_recall_polaridad)))
@@ -612,15 +619,68 @@ for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_atraccion_
     print("Recall Atraccion en pliegue {}:       {}".format(pliegue,recall))
     print("F-Measure Atraccion en pliegue {}:    {}".format(pliegue,F_Measure))
     print("\n")
+Mean_FMesure_Freq_NB_Atraction=(clf, "Frecuencial", "Naive Bayes", statistics.mean(promedio_F_Measure_atraccion))
+
 print("\nPromedio Accuracy Atraccion:     {}".format(statistics.mean(promedio_accuracy_atraccion)))
 print("Promedio Precision Atraccion:    {}".format(statistics.mean(promedio_precision_atraccion)))
 print("Promedio Recall Atraccion:       {}".format(statistics.mean(promedio_recall_atraccion)))
 print("Promedio F-Measure Atraccion:    {}".format(statistics.mean(promedio_F_Measure_atraccion)))
 
-#Variance threshold
-#Feature selection
-#Feature union
-#Invariance learning
-#Preproceseamiento
-#Parametros de los modelos
-#Probar otros modelos
+print("---------------------------PRUEBAS---------------------------------\n")
+print("---------------------------POLARIDAD---------------------------------\n")
+#Pruebas con Polaridad
+best_model_representation_Polarity=[Mean_FMesure_Bin_LR_Polarity,Mean_FMesure_Bin_NB_Polarity,Mean_FMesure_Freq_LR_Polarity,Mean_FMesure_Freq_NB_Polarity]
+best_model_representation_Polarity.sort(key = lambda x: x[3],reverse=True)
+polarity_clf=best_model_representation_Polarity[0][0]
+print("Mejor Representacion "+best_model_representation_Polarity[0][1]+" con el modelo de "+best_model_representation_Polarity[0][2])
+if best_model_representation_Polarity[0][1] == 'Binarizada':
+    Test_results=polarity_clf.predict(X_test_polaridad_binario)
+    accuracy=met.accuracy_score(y_test_polaridad_binario, Test_results)
+    precision=precision_score(y_test_polaridad_binario, Test_results, average='micro')
+    recall=recall_score(y_test_polaridad_binario, Test_results, average='micro')
+    F_Measure=f1_score(y_test_polaridad_binario, Test_results, average='micro')
+    print("Accuracy Polaridad: ",(accuracy))
+    print("Precision Polaridad:",(precision))
+    print("Recall Polaridad:   ",(recall))
+    print("F-Measure Polaridad:",(F_Measure))
+    print("\n")
+else:
+    Test_results=polarity_clf.predict(X_test_polaridad_frecuencia)
+    accuracy=met.accuracy_score(y_test_polaridad_frecuencia, Test_results)
+    precision=precision_score(y_test_polaridad_frecuencia, Test_results, average='micro')
+    recall=recall_score(y_test_polaridad_frecuencia, Test_results, average='micro')
+    F_Measure=f1_score(y_test_polaridad_frecuencia, Test_results, average='micro')
+    print("Accuracy Polaridad: ",(accuracy))
+    print("Precision Polaridad:",(precision))
+    print("Recall Polaridad:   ",(recall))
+    print("F-Measure Polaridad:",(F_Measure))
+    print("\n")
+print("---------------------------ATRACCION---------------------------------\n")
+# #Pruebas con Atraccion
+best_model_representation_Atraction=[Mean_FMesure_Bin_LR_Atraction,Mean_FMesure_Bin_NB_Atraction,Mean_FMesure_Freq_LR_Atraction,Mean_FMesure_Freq_NB_Atraction]
+best_model_representation_Atraction.sort(key = lambda x: x[3],reverse=True)
+Atraction_clf=best_model_representation_Atraction[0][0]
+if best_model_representation_Atraction[0][1] == 'Binarizada':
+    Test_results=Atraction_clf.predict(X_test_atraccion_binario)
+    accuracy=met.accuracy_score(y_test_atraccion_binario, Test_results)
+    precision=precision_score(y_test_atraccion_binario, Test_results, average='micro')
+    recall=recall_score(y_test_atraccion_binario, Test_results, average='micro')
+    F_Measure=f1_score(y_test_atraccion_binario, Test_results, average='micro')
+    print("Mejor Representacion "+best_model_representation_Atraction[0][1]+" con el modelo de "+best_model_representation_Atraction[0][2])
+    print("Accuracy Atraccion: ",(accuracy))
+    print("Precision Atraccion:",(precision))
+    print("Recall Atraccion:   ",(recall))
+    print("F-Measure Atraccion:",(F_Measure))
+    print("\n")
+else:
+    Test_results=Atraction_clf.predict(X_test_atraccion_frecuencia)
+    accuracy=met.accuracy_score(y_test_atraccion_frecuencia, Test_results)
+    precision=precision_score(y_test_atraccion_frecuencia, Test_results, average='micro')
+    recall=recall_score(y_test_atraccion_frecuencia, Test_results, average='micro')
+    F_Measure=f1_score(y_test_atraccion_frecuencia, Test_results, average='micro')
+    print("Mejor Representacion "+best_model_representation_Atraction[0][1]+" con el modelo de "+best_model_representation_Atraction[0][2])
+    print("Accuracy Atraccion: ",(accuracy))
+    print("Precision Atraccion:",(precision))
+    print("Recall Atraccion:   ",(recall))
+    print("F-Measure Atraccion:",(F_Measure))
+    print("\n")
