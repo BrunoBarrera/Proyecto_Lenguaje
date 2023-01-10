@@ -13,6 +13,8 @@ import csv
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import f1_score
+from imblearn.over_sampling import RandomOverSampler
+from collections import Counter
 
 #--------------------------FUNCIONES---------------------------
 def LematizadorOpiniones(opiniones,nlp):
@@ -155,18 +157,30 @@ for t,o in zip(titulos,opiniones):
 # for t,o in zip(titulos_test,opiniones_test):
 #     titulos_opiniones_test.append(t+" "+o)
 
+
 vectorizador_binario = CountVectorizer(binary=True)
 
 titulos_opiniones_binario = vectorizador_binario.fit_transform(titulos_opiniones)
-X_train_polaridad_binario, X_test_polaridad_binario, y_train_polaridad_binario, y_test_polaridad_binario= train_test_split(titulos_opiniones_binario, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
-X_train_atraccion_binario, X_test_atraccion_binario, y_train_atraccion_binario, y_test_atraccion_binario= train_test_split(titulos_opiniones_binario, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
+ros = RandomOverSampler(random_state=0)
+print("Dataset Original:")
+print(sorted(Counter(y_polaridad).items()))
+X_resampledPol, y_resampled_polaridad = ros.fit_resample(titulos_opiniones_binario, y_polaridad)
+X_resampledAtr, y_resampled_atraccion = ros.fit_resample(titulos_opiniones_binario, y_atraccion)
+print("Dataset Baleanceado:")
+print(sorted(Counter(y_resampled_polaridad).items()))
+
+X_train_polaridad_binario, X_test_polaridad_binario, y_train_polaridad_binario, y_test_polaridad_binario= train_test_split(X_resampledPol, y_resampled_polaridad, test_size=0.2,random_state=0,shuffle= True)
+X_train_atraccion_binario, X_test_atraccion_binario, y_train_atraccion_binario, y_test_atraccion_binario= train_test_split(X_resampledAtr, y_resampled_atraccion, test_size=0.2,random_state=0,shuffle= True)
 
 
 vectorizador_frecuencia = CountVectorizer(decode_error='ignore',strip_accents='unicode')
 
 titulos_opiniones_frecuencia = vectorizador_frecuencia.fit_transform(titulos_opiniones)
-X_train_polaridad_frecuencia, X_test_polaridad_frecuencia, y_train_polaridad_frecuencia, y_test_polaridad_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
-X_train_atraccion_frecuencia, X_test_atraccion_frecuencia, y_train_atraccion_frecuencia, y_test_atraccion_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
+X_resampledPol, y_resampled_polaridad = ros.fit_resample(titulos_opiniones_frecuencia, y_polaridad)
+X_resampledAtr, y_resampled_atraccion = ros.fit_resample(titulos_opiniones_frecuencia, y_atraccion)
+
+X_train_polaridad_frecuencia, X_test_polaridad_frecuencia, y_train_polaridad_frecuencia, y_test_polaridad_frecuencia= train_test_split(X_resampledPol, y_resampled_polaridad, test_size=0.2,random_state=0,shuffle= True)
+X_train_atraccion_frecuencia, X_test_atraccion_frecuencia, y_train_atraccion_frecuencia, y_test_atraccion_frecuencia= train_test_split(X_resampledAtr, y_resampled_atraccion, test_size=0.2,random_state=0,shuffle= True)
 
 
 # #------------------------------REPRESENTACION BINARIA TRAIN-----------------------------------------
@@ -260,10 +274,10 @@ y_train_polaridad_binarizada_v=[]
 X_test_binarizada_v=[]
 y_test_polaridad_binarizada_v=[]
 
+X_train_atraccion_binarizada_v=[]
+X_test_atraccion_binarizada_v=[]
 y_train_atraccion_binarizada_v=[]
 y_test_atraccion_binarizada_v=[]
-
-
 
 for i_train, i_test in kf.split(X_train_polaridad_binario):
     X_train_binarizada_v.append(X_train_polaridad_binario[i_train])
@@ -271,6 +285,9 @@ for i_train, i_test in kf.split(X_train_polaridad_binario):
     X_test_binarizada_v.append(X_train_polaridad_binario[i_test])
     y_test_polaridad_binarizada_v.append(np.array(y_train_polaridad_binario)[i_test.astype(int)])
 
+for i_train, i_test in kf.split(X_train_atraccion_binario):
+    X_train_atraccion_binarizada_v.append(X_train_atraccion_binario[i_train])
+    X_test_atraccion_binarizada_v.append(X_train_atraccion_binario[i_test])
     y_train_atraccion_binarizada_v.append(np.array(y_train_atraccion_binario)[i_train.astype(int)])
     y_test_atraccion_binarizada_v.append(np.array(y_train_atraccion_binario)[i_test.astype(int)])
 
@@ -282,23 +299,25 @@ y_test_polaridad_frecuencia_v=[]
 
 y_train_atraccion_frecuencia_v=[]
 y_test_atraccion_frecuencia_v=[]
-
+X_train_atraccion_frecuencia_v=[]
+X_test_atraccion_frecuencia_v=[]
 for i_train, i_test in kf.split(X_train_polaridad_frecuencia):
     X_train_frecuencia_v.append(X_train_polaridad_frecuencia[i_train])
     y_train_polaridad_frecuencia_v.append(np.array(y_train_polaridad_frecuencia)[i_train.astype(int)])
     X_test_frecuencia_v.append(X_train_polaridad_frecuencia[i_test])
     y_test_polaridad_frecuencia_v.append(np.array(y_train_polaridad_frecuencia)[i_test.astype(int)])
 
-    y_train_atraccion_frecuencia_v.append(np.array(y_train_polaridad_frecuencia)[i_train.astype(int)])
-    y_test_atraccion_frecuencia_v.append(np.array(y_train_polaridad_frecuencia)[i_test.astype(int)])
-
-
+for i_train, i_test in kf.split(X_train_atraccion_frecuencia):
+    X_train_atraccion_frecuencia_v.append(X_train_atraccion_frecuencia[i_train])
+    X_test_atraccion_frecuencia_v.append(X_train_atraccion_frecuencia[i_test])
+    y_train_atraccion_frecuencia_v.append(np.array(y_train_atraccion_frecuencia)[i_train.astype(int)])
+    y_test_atraccion_frecuencia_v.append(np.array(y_train_atraccion_frecuencia)[i_test.astype(int)])
 
 # print("---------------------------REPRESENTACION BINARIZADA---------------------------------\n")
 
 #Empezamos con la polaridad
 
-clf = LogisticRegression(random_state=0,max_iter=1700,C=.82,solver="newton-cg")
+clf = LogisticRegression(random_state=0,max_iter=4000,C=.84)
 
 promedio_accuracy_polaridad=[]
 promedio_precision_polaridad=[]
@@ -342,9 +361,9 @@ promedio_recall_atraccion=[]
 promedio_F_Measure_atraccion=[]
 pliegue=0
 
-clf = LogisticRegression(random_state=0,max_iter=1200,C=.84)
+clf = LogisticRegression(random_state=0,max_iter=4000,C=.84)
 print("---------------------------ATRACCION---------------------------------------\n")
-for x_train,y_train,x_test,y_test in zip(X_train_binarizada_v,y_train_atraccion_binarizada_v,X_test_binarizada_v,y_test_atraccion_binarizada_v):
+for x_train,y_train,x_test,y_test in zip(X_train_atraccion_binarizada_v,y_train_atraccion_binarizada_v,X_test_atraccion_binarizada_v,y_test_atraccion_binarizada_v):
     pliegue+=1
     clf.fit(x_train,y_train)
     prediccion=clf.predict(x_test)
@@ -371,19 +390,7 @@ print("Promedio Recall Atraccion:       {}".format(statistics.mean(promedio_reca
 print("Promedio F-Measure Atraccion:    {}".format(statistics.mean(promedio_F_Measure_atraccion)))
 print("\n")
 
-
-
-
-
-
-
-
-
-
-
-
 #-----Entrenamos el modelo de Naive Bayes con los pliegues---------------------
-
 
 clf = MultinomialNB()
 
@@ -430,7 +437,7 @@ promedio_recall_atraccion=[]
 promedio_F_Measure_atraccion=[]
 
 print("---------------------------ATRACCION---------------------------------------\n")
-for x_train,y_train,x_test,y_test in zip(X_train_binarizada_v,y_train_atraccion_binarizada_v,X_test_binarizada_v,y_test_atraccion_binarizada_v):
+for x_train,y_train,x_test,y_test in zip(X_train_atraccion_binarizada_v,y_train_atraccion_binarizada_v,X_test_atraccion_binarizada_v,y_test_atraccion_binarizada_v):
 
     clf.fit(x_train,y_train)
     prediccion=clf.predict(x_test)
@@ -456,15 +463,9 @@ print("Promedio Precision Atraccion:    {}".format(statistics.mean(promedio_prec
 print("Promedio Recall Atraccion:       {}".format(statistics.mean(promedio_recall_atraccion)))
 print("Promedio F-Measure Atraccion:    {}".format(statistics.mean(promedio_F_Measure_atraccion)))
 
-
-
-
-
-
-
 #-----------------------------REPRESENTACION FRECUENCIA-----------------------------------
 
-clf = LogisticRegression(random_state=0,max_iter=1700,C=.84)
+clf = LogisticRegression(random_state=0,max_iter=4000,C=.84)
 promedio_accuracy_polaridad=[]
 promedio_precision_polaridad=[]
 promedio_recall_polaridad=[]
@@ -509,15 +510,15 @@ promedio_recall_atraccion=[]
 promedio_F_Measure_atraccion=[]
 pliegue=0
 
-
 promedio_accuracy_polaridad=[]
 promedio_precision_polaridad=[]
 promedio_recall_polaridad=[]
 promedio_F_Measure_polaridad=[]
 
-clf = LogisticRegression(random_state=0,max_iter=1700,C=.84)
+
+clf = LogisticRegression(random_state=0,max_iter=4000,C=.84)
 print("---------------------------ATRACCION---------------------------------------\n")
-for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_atraccion_frecuencia_v,X_test_frecuencia_v,y_test_atraccion_frecuencia_v):
+for x_train,y_train,x_test,y_test in zip(X_train_atraccion_frecuencia_v,y_train_atraccion_frecuencia_v,X_test_atraccion_frecuencia_v,y_test_atraccion_frecuencia_v):
     pliegue+=1
     clf.fit(x_train,y_train)
     prediccion=clf.predict(x_test)
@@ -544,23 +545,12 @@ print("Promedio Recall Atraccion:       {}".format(statistics.mean(promedio_reca
 print("Promedio F-Measure Atraccion:    {}".format(statistics.mean(promedio_F_Measure_atraccion)))
 print("\n")
 
-
-
-
-
-
-
 #-----Entrenamos el modelo de Naive Bayes con los pliegues---------------------
-
-
 clf = MultinomialNB()
 promedio_accuracy_polaridad=[]
 promedio_precision_polaridad=[]
 promedio_recall_polaridad=[]
 promedio_F_Measure_polaridad=[]
-
-
-
 print("---------------------------NAIVE BAYES---------------------------------------\n")
 pliegue=0
 print("---------------------------POLARIDAD---------------------------------------\n")
@@ -592,14 +582,13 @@ print("Promedio Recall Polaridad:        {}".format(statistics.mean(promedio_rec
 print("Promedio F-Measure Polaridad:     {}".format(statistics.mean(promedio_F_Measure_polaridad)))
 print("\n")
 #Ahora con la atraccion
-
 promedio_accuracy_atraccion=[]
 promedio_precision_atraccion=[]
 promedio_recall_atraccion=[]
 promedio_F_Measure_atraccion=[]
 
 print("---------------------------ATRACCION---------------------------------------\n")
-for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_atraccion_frecuencia_v,X_test_frecuencia_v,y_test_atraccion_frecuencia_v):
+for x_train,y_train,x_test,y_test in zip(X_train_atraccion_frecuencia_v,y_train_atraccion_frecuencia_v,X_test_atraccion_frecuencia_v,y_test_atraccion_frecuencia_v):
 
     clf.fit(x_train,y_train)
     prediccion=clf.predict(x_test)
@@ -626,6 +615,7 @@ print("Promedio Precision Atraccion:    {}".format(statistics.mean(promedio_prec
 print("Promedio Recall Atraccion:       {}".format(statistics.mean(promedio_recall_atraccion)))
 print("Promedio F-Measure Atraccion:    {}".format(statistics.mean(promedio_F_Measure_atraccion)))
 
+
 print("---------------------------PRUEBAS---------------------------------\n")
 print("---------------------------POLARIDAD---------------------------------\n")
 #Pruebas con Polaridad
@@ -635,25 +625,17 @@ polarity_clf=best_model_representation_Polarity[0][0]
 print("Mejor Representacion "+best_model_representation_Polarity[0][1]+" con el modelo de "+best_model_representation_Polarity[0][2])
 if best_model_representation_Polarity[0][1] == 'Binarizada':
     Test_results=polarity_clf.predict(X_test_polaridad_binario)
-    accuracy=met.accuracy_score(y_test_polaridad_binario, Test_results)
-    precision=precision_score(y_test_polaridad_binario, Test_results, average='micro')
-    recall=recall_score(y_test_polaridad_binario, Test_results, average='micro')
-    F_Measure=f1_score(y_test_polaridad_binario, Test_results, average='micro')
-    print("Accuracy Polaridad: ",(accuracy))
-    print("Precision Polaridad:",(precision))
-    print("Recall Polaridad:   ",(recall))
-    print("F-Measure Polaridad:",(F_Measure))
+    print("Accuracy Polaridad: ",met.accuracy_score(y_test_polaridad_binario, Test_results))
+    print("Precision Polaridad:",precision_score(y_test_polaridad_binario, Test_results, average='micro'))
+    print("Recall Polaridad:   ",recall_score(y_test_polaridad_binario, Test_results, average='micro'))
+    print("F-Measure Polaridad:",f1_score(y_test_polaridad_binario, Test_results, average='micro'))
     print("\n")
 else:
     Test_results=polarity_clf.predict(X_test_polaridad_frecuencia)
-    accuracy=met.accuracy_score(y_test_polaridad_frecuencia, Test_results)
-    precision=precision_score(y_test_polaridad_frecuencia, Test_results, average='micro')
-    recall=recall_score(y_test_polaridad_frecuencia, Test_results, average='micro')
-    F_Measure=f1_score(y_test_polaridad_frecuencia, Test_results, average='micro')
-    print("Accuracy Polaridad: ",(accuracy))
-    print("Precision Polaridad:",(precision))
-    print("Recall Polaridad:   ",(recall))
-    print("F-Measure Polaridad:",(F_Measure))
+    print("Accuracy Polaridad: ",met.accuracy_score(y_test_polaridad_frecuencia, Test_results))
+    print("Precision Polaridad:",precision_score(y_test_polaridad_frecuencia, Test_results, average='micro'))
+    print("Recall Polaridad:   ",recall_score(y_test_polaridad_frecuencia, Test_results, average='micro'))
+    print("F-Measure Polaridad:",f1_score(y_test_polaridad_frecuencia, Test_results, average='micro'))
     print("\n")
 print("---------------------------ATRACCION---------------------------------\n")
 # #Pruebas con Atraccion
@@ -662,25 +644,17 @@ best_model_representation_Atraction.sort(key = lambda x: x[3],reverse=True)
 Atraction_clf=best_model_representation_Atraction[0][0]
 if best_model_representation_Atraction[0][1] == 'Binarizada':
     Test_results=Atraction_clf.predict(X_test_atraccion_binario)
-    accuracy=met.accuracy_score(y_test_atraccion_binario, Test_results)
-    precision=precision_score(y_test_atraccion_binario, Test_results, average='micro')
-    recall=recall_score(y_test_atraccion_binario, Test_results, average='micro')
-    F_Measure=f1_score(y_test_atraccion_binario, Test_results, average='micro')
     print("Mejor Representacion "+best_model_representation_Atraction[0][1]+" con el modelo de "+best_model_representation_Atraction[0][2])
-    print("Accuracy Atraccion: ",(accuracy))
-    print("Precision Atraccion:",(precision))
-    print("Recall Atraccion:   ",(recall))
-    print("F-Measure Atraccion:",(F_Measure))
+    print("Accuracy Atraccion: ",met.accuracy_score(y_test_atraccion_binario, Test_results))
+    print("Precision Atraccion:",precision_score(y_test_atraccion_binario, Test_results, average='micro'))
+    print("Recall Atraccion:   ",recall_score(y_test_atraccion_binario, Test_results, average='micro'))
+    print("F-Measure Atraccion:",f1_score(y_test_atraccion_binario, Test_results, average='micro'))
     print("\n")
 else:
     Test_results=Atraction_clf.predict(X_test_atraccion_frecuencia)
-    accuracy=met.accuracy_score(y_test_atraccion_frecuencia, Test_results)
-    precision=precision_score(y_test_atraccion_frecuencia, Test_results, average='micro')
-    recall=recall_score(y_test_atraccion_frecuencia, Test_results, average='micro')
-    F_Measure=f1_score(y_test_atraccion_frecuencia, Test_results, average='micro')
     print("Mejor Representacion "+best_model_representation_Atraction[0][1]+" con el modelo de "+best_model_representation_Atraction[0][2])
-    print("Accuracy Atraccion: ",(accuracy))
-    print("Precision Atraccion:",(precision))
-    print("Recall Atraccion:   ",(recall))
-    print("F-Measure Atraccion:",(F_Measure))
+    print("Accuracy Atraccion: ",met.accuracy_score(y_test_atraccion_frecuencia, Test_results))
+    print("Precision Atraccion:",precision_score(y_test_atraccion_frecuencia, Test_results, average='micro'))
+    print("Recall Atraccion:   ",recall_score(y_test_atraccion_frecuencia, Test_results, average='micro'))
+    print("F-Measure Atraccion:",f1_score(y_test_atraccion_frecuencia, Test_results, average='micro'))
     print("\n")
