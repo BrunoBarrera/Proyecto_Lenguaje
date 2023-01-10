@@ -15,7 +15,8 @@ from sklearn.metrics import recall_score
 from sklearn.metrics import f1_score
 from imblearn.over_sampling import RandomOverSampler
 from collections import Counter
-
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
 #--------------------------FUNCIONES---------------------------
 def LematizadorOpiniones(opiniones,nlp):
     opiniones_lematizadas=[]
@@ -82,7 +83,7 @@ def LematizadorTitulos(titles,nlp):
 #     pickle.dump(matriz_OTPA, f)  
 
 
-with open("parte_2\matriz_opiniones_titulos_polaridades_atracciones.pickle", "rb") as f:
+with open("parte_2\matriz_opiniones_titulos_polaridades_atracciones_procesada.pickle", "rb") as f:
     obj = pickle.load(f)
 
 
@@ -159,30 +160,30 @@ for t,o in zip(titulos,opiniones):
 
 
 vectorizador_binario = CountVectorizer(binary=True)
-
 titulos_opiniones_binario = vectorizador_binario.fit_transform(titulos_opiniones)
+X_train_polaridad_binario, X_test_polaridad_binario, y_train_polaridad_binario, y_test_polaridad_binario= train_test_split(titulos_opiniones_binario, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
+X_train_atraccion_binario, X_test_atraccion_binario, y_train_atraccion_binario, y_test_atraccion_binario= train_test_split(titulos_opiniones_binario, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
+
 ros = RandomOverSampler(random_state=0)
-print("Dataset Original:")
-print(sorted(Counter(y_polaridad).items()))
-X_resampledPol, y_resampled_polaridad = ros.fit_resample(titulos_opiniones_binario, y_polaridad)
-X_resampledAtr, y_resampled_atraccion = ros.fit_resample(titulos_opiniones_binario, y_atraccion)
-print("Dataset Baleanceado:")
-print(sorted(Counter(y_resampled_polaridad).items()))
+X_train_polaridad_binario, y_train_polaridad_binario = ros.fit_resample(X_train_polaridad_binario, y_train_polaridad_binario)
+X_train_atraccion_binario, y_train_atraccion_binario = ros.fit_resample(X_train_atraccion_binario, y_train_atraccion_binario)
 
-X_train_polaridad_binario, X_test_polaridad_binario, y_train_polaridad_binario, y_test_polaridad_binario= train_test_split(X_resampledPol, y_resampled_polaridad, test_size=0.2,random_state=0,shuffle= True)
-X_train_atraccion_binario, X_test_atraccion_binario, y_train_atraccion_binario, y_test_atraccion_binario= train_test_split(X_resampledAtr, y_resampled_atraccion, test_size=0.2,random_state=0,shuffle= True)
-
+# print("Dataset Original:")
+# print(sorted(Counter(y_polaridad).items()))
+# print("Dataset Baleanceado:")
+# print(sorted(Counter(y_resampled_polaridad).items()))
 
 vectorizador_frecuencia = CountVectorizer(decode_error='ignore',strip_accents='unicode')
-
 titulos_opiniones_frecuencia = vectorizador_frecuencia.fit_transform(titulos_opiniones)
-X_resampledPol, y_resampled_polaridad = ros.fit_resample(titulos_opiniones_frecuencia, y_polaridad)
-X_resampledAtr, y_resampled_atraccion = ros.fit_resample(titulos_opiniones_frecuencia, y_atraccion)
+X_train_polaridad_frecuencia, X_test_polaridad_frecuencia, y_train_polaridad_frecuencia, y_test_polaridad_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
+X_train_atraccion_frecuencia, X_test_atraccion_frecuencia, y_train_atraccion_frecuencia, y_test_atraccion_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
 
-X_train_polaridad_frecuencia, X_test_polaridad_frecuencia, y_train_polaridad_frecuencia, y_test_polaridad_frecuencia= train_test_split(X_resampledPol, y_resampled_polaridad, test_size=0.2,random_state=0,shuffle= True)
-X_train_atraccion_frecuencia, X_test_atraccion_frecuencia, y_train_atraccion_frecuencia, y_test_atraccion_frecuencia= train_test_split(X_resampledAtr, y_resampled_atraccion, test_size=0.2,random_state=0,shuffle= True)
+X_train_polaridad_frecuencia, y_train_polaridad_frecuencia = ros.fit_resample(X_train_polaridad_frecuencia, y_train_polaridad_frecuencia)
+X_train_atraccion_frecuencia, y_train_atraccion_frecuencia = ros.fit_resample(X_train_atraccion_frecuencia, y_train_atraccion_frecuencia)
 
 
+# X_train_polaridad_frecuencia= SelectKBest(chi2, k=20000).fit_transform(X_train_polaridad_frecuencia, y_train_polaridad_frecuencia)
+# X_test_polaridad_frecuencia= SelectKBest(chi2, k=20000).fit_transform(X_test_polaridad_frecuencia, y_train_polaridad_frecuencia)
 # #------------------------------REPRESENTACION BINARIA TRAIN-----------------------------------------
 # vectorizador_binario = CountVectorizer(binary=True)
 
@@ -435,10 +436,10 @@ promedio_accuracy_atraccion=[]
 promedio_precision_atraccion=[]
 promedio_recall_atraccion=[]
 promedio_F_Measure_atraccion=[]
-
+pliegue=0
 print("---------------------------ATRACCION---------------------------------------\n")
 for x_train,y_train,x_test,y_test in zip(X_train_atraccion_binarizada_v,y_train_atraccion_binarizada_v,X_test_atraccion_binarizada_v,y_test_atraccion_binarizada_v):
-
+    pliegue+=1
     clf.fit(x_train,y_train)
     prediccion=clf.predict(x_test)
 
@@ -586,10 +587,10 @@ promedio_accuracy_atraccion=[]
 promedio_precision_atraccion=[]
 promedio_recall_atraccion=[]
 promedio_F_Measure_atraccion=[]
-
+pliegue=0
 print("---------------------------ATRACCION---------------------------------------\n")
 for x_train,y_train,x_test,y_test in zip(X_train_atraccion_frecuencia_v,y_train_atraccion_frecuencia_v,X_test_atraccion_frecuencia_v,y_test_atraccion_frecuencia_v):
-
+    pliegue+=1
     clf.fit(x_train,y_train)
     prediccion=clf.predict(x_test)
 
