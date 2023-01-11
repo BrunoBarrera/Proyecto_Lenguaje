@@ -1,0 +1,341 @@
+Dataset Original:
+[(1, 546), (2, 730), (3, 2121), (4, 5878), (5, 20936)]
+Dataset Baleanceado:
+[(1, 20936), (2, 20936), (3, 20936), (4, 20936), (5, 20936)]
+---------------------------REPRESENTACION BINARIZADA---------------------------------
+
+---------------------------REGRESION LOGISTICA---------------------------------------
+
+---------------------------------POLARIDAD-------------------------------------------
+
+Accuracy Polaridad en pliegue 1:     0.9285330467490597
+Precision Polaridad en pliegue 1:    0.9285330467490597
+Recall Polaridad en pliegue 1:       0.9285330467490597
+F-Measure Polaridad en pliegue 1:    0.9285330467490597
+
+
+Accuracy Polaridad en pliegue 2:     0.9266821899814914
+Precision Polaridad en pliegue 2:    0.9266821899814914
+Recall Polaridad en pliegue 2:       0.9266821899814914
+F-Measure Polaridad en pliegue 2:    0.9266821899814914
+
+
+Accuracy Polaridad en pliegue 3:     0.9297271478894262
+Precision Polaridad en pliegue 3:    0.9297271478894262
+Recall Polaridad en pliegue 3:       0.9297271478894262
+F-Measure Polaridad en pliegue 3:    0.9297271478894262
+
+
+Accuracy Polaridad en pliegue 4:     0.9337870917666726
+Precision Polaridad en pliegue 4:    0.9337870917666726
+Recall Polaridad en pliegue 4:       0.9337870917666726
+F-Measure Polaridad en pliegue 4:    0.9337870917666726
+
+
+Accuracy Polaridad en pliegue 5:     0.9291855743969429
+Precision Polaridad en pliegue 5:    0.9291855743969429
+Recall Polaridad en pliegue 5:       0.9291855743969429
+F-Measure Polaridad en pliegue 5:    0.9291855743969429
+
+
+Promedio Accuracy Polaridad:      0.9295830101567186
+Promedio Precision Polaridad:     0.9295830101567186
+Promedio Recall Polaridad:        0.9295830101567186
+Promedio F-Measure Polaridad:     0.9295830101567186
+
+
+---------------------------ATRACCION---------------------------------------
+
+Accuracy Atraccion en pliegue 1:     0.9870456546346371
+Precision Atraccion en pliegue 1:    0.9870456546346371
+Recall Atraccion en pliegue 1:       0.9870456546346371
+F-Measure Atraccion en pliegue 1:    0.9870456546346371
+
+
+Accuracy Atraccion en pliegue 2:     0.9851590994843415
+Precision Atraccion en pliegue 2:    0.9851590994843415
+Recall Atraccion en pliegue 2:       0.9851590994843415
+F-Measure Atraccion en pliegue 2:    0.9851590994843415
+
+
+Accuracy Atraccion en pliegue 3:     0.9876745063514023
+Precision Atraccion en pliegue 3:    0.9876745063514023
+Recall Atraccion en pliegue 3:       0.9876745063514023
+F-Measure Atraccion en pliegue 3:    0.9876745063514023
+
+
+Accuracy Atraccion en pliegue 4:     0.990691823899371
+Precision Atraccion en pliegue 4:    0.990691823899371
+Recall Atraccion en pliegue 4:       0.990691823899371
+F-Measure Atraccion en pliegue 4:    0.990691823899371
+
+
+Accuracy Atraccion en pliegue 5:     0.9879245283018868
+Precision Atraccion en pliegue 5:    0.9879245283018868
+Recall Atraccion en pliegue 5:       0.9879245283018868
+F-Measure Atraccion en pliegue 5:    0.9879245283018868
+
+
+
+Promedio Accuracy Atraccion:     0.9876991225343278
+Promedio Precision Atraccion:    0.9876991225343278
+Promedio Recall Atraccion:       0.9876991225343278
+Promedio F-Measure Atraccion:    0.9876991225343278
+
+
+---------------------------NAIVE BAYES---------------------------------------
+
+---------------------------POLARIDAD---------------------------------------
+
+Accuracy Polaridad en pliegue 1:     0.8166457698967102
+Precision Polaridad en pliegue 1:    0.8166457698967102
+Recall Polaridad en pliegue 1:       0.8166457698967102
+F-Measure Polaridad en pliegue 1:    0.8166457698967102
+
+
+Accuracy Polaridad en pliegue 2:     0.8110334945369873
+Precision Polaridad en pliegue 2:    0.8110334945369873
+Recall Polaridad en pliegue 2:       0.8110334945369873
+F-Measure Polaridad en pliegue 2:    0.8110334945369873
+
+
+Accuracy Polaridad en pliegue 3:     0.8107349692518956
+Precision Polaridad en pliegue 3:    0.8107349692518956
+Recall Polaridad en pliegue 3:       0.8107349692518956
+F-Measure Polaridad en pliegue 3:    0.8107349692518956
+
+
+Accuracy Polaridad en pliegue 4:     0.8181383963221684
+Precision Polaridad en pliegue 4:    0.8181383963221684
+Recall Polaridad en pliegue 4:       0.8181383963221684
+F-Measure Polaridad en pliegue 4:    0.8181383963221684
+
+
+Accuracy Polaridad en pliegue 5:     0.8175304513971817
+Precision Polaridad en pliegue 5:    0.8175304513971817
+Recall Polaridad en pliegue 5:       0.8175304513971817
+F-Measure Polaridad en pliegue 5:    0.8175304513971817
+
+
+
+Promedio Accuracy Polaridad:      0.8148166162809887
+Promedio Precision Polaridad:     0.8148166162809887
+Promedio Recall Polaridad:        0.8148166162809887
+Promedio F-Measure Polaridad:     0.8148166162809887
+
+
+---------------------------ATRACCION---------------------------------------
+
+Accuracy Atraccion en pliegue 1:     0.9816375298704565
+Precision Atraccion en pliegue 1:    0.9816375298704565
+Recall Atraccion en pliegue 1:       0.9816375298704565
+F-Measure Atraccion en pliegue 1:    0.9816375298704565
+
+
+Accuracy Atraccion en pliegue 2:     0.9802540560935732
+Precision Atraccion en pliegue 2:    0.9802540560935732
+Recall Atraccion en pliegue 2:       0.9802540560935732
+F-Measure Atraccion en pliegue 2:    0.9802540560935732
+
+
+Accuracy Atraccion en pliegue 3:     0.9779901899132185
+Precision Atraccion en pliegue 3:    0.9779901899132185
+Recall Atraccion en pliegue 3:       0.9779901899132185
+F-Measure Atraccion en pliegue 3:    0.9779901899132185
+
+
+Accuracy Atraccion en pliegue 4:     0.9817610062893082
+Precision Atraccion en pliegue 4:    0.9817610062893082
+Recall Atraccion en pliegue 4:       0.9817610062893082
+F-Measure Atraccion en pliegue 4:    0.9817610062893082
+
+
+Accuracy Atraccion en pliegue 5:     0.979622641509434
+Precision Atraccion en pliegue 5:    0.979622641509434
+Recall Atraccion en pliegue 5:       0.979622641509434
+F-Measure Atraccion en pliegue 5:    0.979622641509434
+
+
+
+Promedio Accuracy Atraccion:     0.9802530847351981
+Promedio Precision Atraccion:    0.9802530847351981
+Promedio Recall Atraccion:       0.9802530847351981
+Promedio F-Measure Atraccion:    0.9802530847351981
+
+---------------------------REPRESENTACION FRECUENCIA---------------------------------
+
+---------------------------REGRESION LOGISTICA---------------------------------------
+
+---------------------------------POLARIDAD-------------------------------------------
+
+Accuracy Polaridad en pliegue 1:     0.9281748164069497
+Precision Polaridad en pliegue 1:    0.9281748164069497
+Recall Polaridad en pliegue 1:       0.9281748164069497
+F-Measure Polaridad en pliegue 1:    0.9281748164069497
+
+
+Accuracy Polaridad en pliegue 2:     0.9279957012358947
+Precision Polaridad en pliegue 2:    0.9279957012358947
+Recall Polaridad en pliegue 2:       0.9279957012358947
+F-Measure Polaridad en pliegue 2:    0.9279957012358947
+
+
+Accuracy Polaridad en pliegue 3:     0.9315780046569945
+Precision Polaridad en pliegue 3:    0.9315780046569945
+Recall Polaridad en pliegue 3:       0.9315780046569945
+F-Measure Polaridad en pliegue 3:    0.9315780046569945
+
+
+Accuracy Polaridad en pliegue 4:     0.9313988894859394
+Precision Polaridad en pliegue 4:    0.9313988894859394
+Recall Polaridad en pliegue 4:       0.9313988894859394
+F-Measure Polaridad en pliegue 4:    0.9313988894859394
+
+
+Accuracy Polaridad en pliegue 5:     0.9290064485311679
+Precision Polaridad en pliegue 5:    0.9290064485311679
+Recall Polaridad en pliegue 5:       0.9290064485311679
+F-Measure Polaridad en pliegue 5:    0.9290064485311679
+
+
+Promedio Accuracy Polaridad:      0.9296307720633892
+Promedio Precision Polaridad:     0.9296307720633892
+Promedio Recall Polaridad:        0.9296307720633892
+Promedio F-Measure Polaridad:     0.9296307720633892
+
+
+---------------------------ATRACCION---------------------------------------
+
+Accuracy Atraccion en pliegue 1:     0.9876745063514023
+Precision Atraccion en pliegue 1:    0.9876745063514023
+Recall Atraccion en pliegue 1:       0.9876745063514023
+F-Measure Atraccion en pliegue 1:    0.9876745063514023
+
+
+Accuracy Atraccion en pliegue 2:     0.9857879512011067
+Precision Atraccion en pliegue 2:    0.9857879512011067
+Recall Atraccion en pliegue 2:       0.9857879512011067
+F-Measure Atraccion en pliegue 2:    0.9857879512011067
+
+
+Accuracy Atraccion en pliegue 3:     0.9878002766947553
+Precision Atraccion en pliegue 3:    0.9878002766947553
+Recall Atraccion en pliegue 3:       0.9878002766947553
+F-Measure Atraccion en pliegue 3:    0.9878002766947553
+
+
+Accuracy Atraccion en pliegue 4:     0.989811320754717
+Precision Atraccion en pliegue 4:    0.989811320754717
+Recall Atraccion en pliegue 4:       0.989811320754717
+F-Measure Atraccion en pliegue 4:    0.989811320754717
+
+
+Accuracy Atraccion en pliegue 5:     0.9880503144654088
+Precision Atraccion en pliegue 5:    0.9880503144654088
+Recall Atraccion en pliegue 5:       0.9880503144654088
+F-Measure Atraccion en pliegue 5:    0.9880503144654088
+
+
+
+Promedio Accuracy Atraccion:     0.9878248738934781
+Promedio Precision Atraccion:    0.9878248738934781
+Promedio Recall Atraccion:       0.9878248738934781
+Promedio F-Measure Atraccion:    0.9878248738934781
+
+
+---------------------------NAIVE BAYES---------------------------------------
+
+---------------------------POLARIDAD---------------------------------------
+
+Accuracy Polaridad en pliegue 1:     0.8064362051465759
+Precision Polaridad en pliegue 1:    0.8064362051465759
+Recall Polaridad en pliegue 1:       0.8064362051465759
+F-Measure Polaridad en pliegue 1:    0.8064362051465759
+
+
+Accuracy Polaridad en pliegue 2:     0.8000477640456146
+Precision Polaridad en pliegue 2:    0.8000477640456146
+Recall Polaridad en pliegue 2:       0.8000477640456146
+F-Measure Polaridad en pliegue 2:    0.8000477640456146
+
+
+Accuracy Polaridad en pliegue 3:     0.8045256433219894
+Precision Polaridad en pliegue 3:    0.8045256433219894
+Recall Polaridad en pliegue 3:       0.8045256433219894
+F-Measure Polaridad en pliegue 3:    0.8045256433219894
+
+
+Accuracy Polaridad en pliegue 4:     0.8098393933966207
+Precision Polaridad en pliegue 4:    0.8098393933966207
+Recall Polaridad en pliegue 4:       0.8098393933966207
+F-Measure Polaridad en pliegue 4:    0.8098393933966207
+
+
+Accuracy Polaridad en pliegue 5:     0.8021853355624552
+Precision Polaridad en pliegue 5:    0.8021853355624552
+Recall Polaridad en pliegue 5:       0.8021853355624552
+F-Measure Polaridad en pliegue 5:    0.8021853355624552
+
+
+
+Promedio Accuracy Polaridad:      0.8046068682946511
+Promedio Precision Polaridad:     0.8046068682946511
+Promedio Recall Polaridad:        0.8046068682946511
+Promedio F-Measure Polaridad:     0.8046068682946511
+
+
+---------------------------ATRACCION---------------------------------------
+
+Accuracy Atraccion en pliegue 1:     0.9781159602565715
+Precision Atraccion en pliegue 1:    0.9781159602565715
+Recall Atraccion en pliegue 1:       0.9781159602565715
+F-Measure Atraccion en pliegue 1:    0.9781159602565715
+
+
+Accuracy Atraccion en pliegue 2:     0.9776128788831594
+Precision Atraccion en pliegue 2:    0.9776128788831594
+Recall Atraccion en pliegue 2:       0.9776128788831594
+F-Measure Atraccion en pliegue 2:    0.9776128788831594
+
+
+Accuracy Atraccion en pliegue 3:     0.9742170796126274
+Precision Atraccion en pliegue 3:    0.9742170796126274
+Recall Atraccion en pliegue 3:       0.9742170796126274
+F-Measure Atraccion en pliegue 3:    0.9742170796126274
+
+
+Accuracy Atraccion en pliegue 4:     0.979874213836478
+Precision Atraccion en pliegue 4:    0.979874213836478
+Recall Atraccion en pliegue 4:       0.979874213836478
+F-Measure Atraccion en pliegue 4:    0.979874213836478
+
+
+Accuracy Atraccion en pliegue 5:     0.9768553459119497
+Precision Atraccion en pliegue 5:    0.9768553459119497
+Recall Atraccion en pliegue 5:       0.9768553459119497
+F-Measure Atraccion en pliegue 5:    0.9768553459119497
+
+
+
+Promedio Accuracy Atraccion:     0.9773350957001572
+Promedio Precision Atraccion:    0.9773350957001572
+Promedio Recall Atraccion:       0.9773350957001572
+Promedio F-Measure Atraccion:    0.9773350957001572
+---------------------------PRUEBAS---------------------------------
+
+---------------------------POLARIDAD---------------------------------
+
+Mejor Representacion Frecuencial con el modelo de Regresion Logistica
+Accuracy Polaridad:  0.9063379116332947
+Precision Polaridad: 0.9063379116332947
+Recall Polaridad:    0.9063379116332947
+F-Measure Polaridad: 0.9063379116332947
+
+
+---------------------------ATRACCION---------------------------------
+
+Mejor Representacion Frecuencial con el modelo de Regresion Logistica
+Accuracy Atraccion:  0.9942081747476419
+Precision Atraccion: 0.9942081747476419
+Recall Atraccion:    0.9942081747476419
+F-Measure Atraccion: 0.9942081747476419

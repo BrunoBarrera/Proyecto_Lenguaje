@@ -160,27 +160,34 @@ for t,o in zip(titulos,opiniones):
 
 
 vectorizador_binario = CountVectorizer(binary=True)
+
 titulos_opiniones_binario = vectorizador_binario.fit_transform(titulos_opiniones)
-X_train_polaridad_binario, X_test_polaridad_binario, y_train_polaridad_binario, y_test_polaridad_binario= train_test_split(titulos_opiniones_binario, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
-X_train_atraccion_binario, X_test_atraccion_binario, y_train_atraccion_binario, y_test_atraccion_binario= train_test_split(titulos_opiniones_binario, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
-
 ros = RandomOverSampler(random_state=0)
-X_train_polaridad_binario, y_train_polaridad_binario = ros.fit_resample(X_train_polaridad_binario, y_train_polaridad_binario)
-X_train_atraccion_binario, y_train_atraccion_binario = ros.fit_resample(X_train_atraccion_binario, y_train_atraccion_binario)
+print("Dataset Original:")
+print(sorted(Counter(y_polaridad).items()))
+X_resampledPol, y_resampled_polaridad = ros.fit_resample(titulos_opiniones_binario, y_polaridad)
+X_resampledAtr, y_resampled_atraccion = ros.fit_resample(titulos_opiniones_binario, y_atraccion)
+print("Dataset Baleanceado:")
+print(sorted(Counter(y_resampled_polaridad).items()))
 
-# print("Dataset Original:")
-# print(sorted(Counter(y_polaridad).items()))
-# print("Dataset Baleanceado:")
-# print(sorted(Counter(y_resampled_polaridad).items()))
+X_train_polaridad_binario, X_test_polaridad_binario, y_train_polaridad_binario, y_test_polaridad_binario= train_test_split(X_resampledPol, y_resampled_polaridad, test_size=0.2,random_state=0,shuffle= True)
+X_train_atraccion_binario, X_test_atraccion_binario, y_train_atraccion_binario, y_test_atraccion_binario= train_test_split(X_resampledAtr, y_resampled_atraccion, test_size=0.2,random_state=0,shuffle= True)
+
 
 vectorizador_frecuencia = CountVectorizer(decode_error='ignore',strip_accents='unicode')
+
 titulos_opiniones_frecuencia = vectorizador_frecuencia.fit_transform(titulos_opiniones)
-X_train_polaridad_frecuencia, X_test_polaridad_frecuencia, y_train_polaridad_frecuencia, y_test_polaridad_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
-X_train_atraccion_frecuencia, X_test_atraccion_frecuencia, y_train_atraccion_frecuencia, y_test_atraccion_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
+X_resampledPol, y_resampled_polaridad = ros.fit_resample(titulos_opiniones_frecuencia, y_polaridad)
+X_resampledAtr, y_resampled_atraccion = ros.fit_resample(titulos_opiniones_frecuencia, y_atraccion)
 
-X_train_polaridad_frecuencia, y_train_polaridad_frecuencia = ros.fit_resample(X_train_polaridad_frecuencia, y_train_polaridad_frecuencia)
-X_train_atraccion_frecuencia, y_train_atraccion_frecuencia = ros.fit_resample(X_train_atraccion_frecuencia, y_train_atraccion_frecuencia)
+X_train_polaridad_frecuencia, X_test_polaridad_frecuencia, y_train_polaridad_frecuencia, y_test_polaridad_frecuencia= train_test_split(X_resampledPol, y_resampled_polaridad, test_size=0.2,random_state=0,shuffle= True)
+X_train_atraccion_frecuencia, X_test_atraccion_frecuencia, y_train_atraccion_frecuencia, y_test_atraccion_frecuencia= train_test_split(X_resampledAtr, y_resampled_atraccion, test_size=0.2,random_state=0,shuffle= True)
 
+
+noseusa1, X_test_polaridad_binario, noseusa3, y_test_polaridad_binario= train_test_split(titulos_opiniones_binario, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
+noseusa2, X_test_atraccion_binario, noseusa4, y_test_atraccion_binario= train_test_split(titulos_opiniones_binario, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
+noseusa5, X_test_polaridad_frecuencia, noseusa7, y_test_polaridad_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_polaridad, test_size=0.2,random_state=0,shuffle= True)
+noseusa6, X_test_atraccion_frecuencia, noseusa8, y_test_atraccion_frecuencia= train_test_split(titulos_opiniones_frecuencia, y_atraccion, test_size=0.2,random_state=0,shuffle= True)
 
 # X_train_polaridad_frecuencia= SelectKBest(chi2, k=20000).fit_transform(X_train_polaridad_frecuencia, y_train_polaridad_frecuencia)
 # X_test_polaridad_frecuencia= SelectKBest(chi2, k=20000).fit_transform(X_test_polaridad_frecuencia, y_train_polaridad_frecuencia)
