@@ -4,8 +4,10 @@ import spacy
 import pickle
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.metrics import precision_recall_fscore_support as score
 from statistics import median
+import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
@@ -356,6 +358,11 @@ for x_train,y_train,x_test,y_test in zip(X_train_binarizada_v,y_train_polaridad_
     promedio_precision_polaridad.append(precision)
     promedio_recall_polaridad.append(recall)
     promedio_F_Measure_polaridad.append(F_Measure)
+    # cm = confusion_matrix(y_test, prediccion,labels= clf.classes_)
+    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+    # disp.plot()
+    # plt.show()
+    # print(classification_report(y_test, prediccion,labels= clf.classes_))
 
     # print("Pliegue ",pliegue)
     # xd=met.classification_report(prediccion,y_test)
@@ -400,6 +407,11 @@ for x_train,y_train,x_test,y_test in zip(X_train_atraccion_binarizada_v,y_train_
     promedio_precision_atraccion.append(precision)
     promedio_recall_atraccion.append(recall)
     promedio_F_Measure_atraccion.append(F_Measure)
+    # cm = confusion_matrix(y_test, prediccion,labels= clf.classes_)
+    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+    # disp.plot()
+    # plt.show()
+    # print(classification_report(y_test, prediccion,labels= clf.classes_))
 
     print("Accuracy Atraccion en pliegue {}:     {}".format(pliegue,accuracy))
     print("Precision Atraccion en pliegue {}:    {}".format(pliegue,precision))
@@ -447,7 +459,11 @@ for x_train,y_train,x_test,y_test in zip(X_train_binarizada_v,y_train_polaridad_
     promedio_recall_polaridad.append(recall)
     promedio_F_Measure_polaridad.append(F_Measure)
 
-
+    # cm = confusion_matrix(y_test, prediccion,labels= clf.classes_)
+    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+    # disp.plot()
+    # plt.show()
+    # print(classification_report(y_test, prediccion,labels= clf.classes_))
     print("Accuracy Polaridad en pliegue {}:     {}".format(pliegue,accuracy))
     print("Precision Polaridad en pliegue {}:    {}".format(pliegue,precision))
     print("Recall Polaridad en pliegue {}:       {}".format(pliegue,recall))
@@ -487,7 +503,11 @@ for x_train,y_train,x_test,y_test in zip(X_train_atraccion_binarizada_v,y_train_
     promedio_precision_atraccion.append(precision)
     promedio_recall_atraccion.append(recall)
     promedio_F_Measure_atraccion.append(F_Measure)
-
+    # cm = confusion_matrix(y_test, prediccion,labels= clf.classes_)
+    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+    # disp.plot()
+    # plt.show()
+    # print(classification_report(y_test, prediccion,labels= clf.classes_))
     print("Accuracy Atraccion en pliegue {}:     {}".format(pliegue,accuracy))
     print("Precision Atraccion en pliegue {}:    {}".format(pliegue,precision))
     print("Recall Atraccion en pliegue {}:       {}".format(pliegue,recall))
@@ -533,7 +553,11 @@ for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_polaridad_
     promedio_recall_polaridad.append(recall)
     promedio_F_Measure_polaridad.append(F_Measure)
 
-
+    # cm = confusion_matrix(y_test, prediccion,labels= clf.classes_)
+    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+    # disp.plot()
+    # plt.show()
+    # print(classification_report(y_test, prediccion,labels= clf.classes_))
     print("Accuracy Polaridad en pliegue {}:     {}".format(pliegue,accuracy))
     print("Precision Polaridad en pliegue {}:    {}".format(pliegue,precision))
     print("Recall Polaridad en pliegue {}:       {}".format(pliegue,recall))
@@ -578,7 +602,11 @@ for x_train,y_train,x_test,y_test in zip(X_train_atraccion_frecuencia_v,y_train_
     promedio_precision_atraccion.append(precision)
     promedio_recall_atraccion.append(recall)
     promedio_F_Measure_atraccion.append(F_Measure)
-
+    # cm = confusion_matrix(y_test, prediccion,labels= clf.classes_)
+    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+    # disp.plot()
+    # plt.show()
+    # print(classification_report(y_test, prediccion,labels= clf.classes_))
     print("Accuracy Atraccion en pliegue {}:     {}".format(pliegue,accuracy))
     print("Precision Atraccion en pliegue {}:    {}".format(pliegue,precision))
     print("Recall Atraccion en pliegue {}:       {}".format(pliegue,recall))
@@ -618,8 +646,11 @@ for x_train,y_train,x_test,y_test in zip(X_train_frecuencia_v,y_train_polaridad_
     promedio_precision_polaridad.append(precision)
     promedio_recall_polaridad.append(recall)
     promedio_F_Measure_polaridad.append(F_Measure)
-
-
+    # cm = confusion_matrix(y_test, prediccion,labels= clf.classes_)
+    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+    # disp.plot()
+    # plt.show()
+    # print(classification_report(y_test, prediccion,labels= clf.classes_))
     print("Accuracy Polaridad en pliegue {}:     {}".format(pliegue,accuracy))
     print("Precision Polaridad en pliegue {}:    {}".format(pliegue,precision))
     print("Recall Polaridad en pliegue {}:       {}".format(pliegue,recall))
@@ -656,7 +687,11 @@ for x_train,y_train,x_test,y_test in zip(X_train_atraccion_frecuencia_v,y_train_
     promedio_precision_atraccion.append(precision)
     promedio_recall_atraccion.append(recall)
     promedio_F_Measure_atraccion.append(F_Measure)
-
+    # cm = confusion_matrix(y_test, prediccion,labels= clf.classes_)
+    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+    # disp.plot()
+    # plt.show()
+    # print(classification_report(y_test, prediccion,labels= clf.classes_))
     print("Accuracy Atraccion en pliegue {}:     {}".format(pliegue,accuracy))
     print("Precision Atraccion en pliegue {}:    {}".format(pliegue,precision))
     print("Recall Atraccion en pliegue {}:       {}".format(pliegue,recall))
@@ -685,7 +720,11 @@ if best_model_representation_Polarity[0][1] == 'Binarizada':
     recall = median(recall)
     F_Measure = median(F_Measure)
     precision = median(precision)
-
+    cm = confusion_matrix(y_test_polaridad_binario, Test_results,labels= polarity_clf.classes_)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=polarity_clf.classes_)
+    disp.plot()
+    plt.show()
+    print(classification_report(y_test_polaridad_binario, Test_results,labels= polarity_clf.classes_))
     # print("Accuracy Polaridad: ",met.accuracy_score(y_test_polaridad_binario, Test_results))
     # print("Precision Polaridad:",precision_score(y_test_polaridad_binario, Test_results, average='micro'))
     # print("Recall Polaridad:   ",recall_score(y_test_polaridad_binario, Test_results, average='micro'))
@@ -706,6 +745,11 @@ else:
     recall = median(recall)
     F_Measure = median(F_Measure)
     precision = median(precision)
+    cm = confusion_matrix(X_test_polaridad_frecuencia, Test_results,labels= polarity_clf.classes_)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=polarity_clf.classes_)
+    disp.plot()
+    plt.show()
+    print(classification_report(X_test_polaridad_frecuencia, Test_results,labels= polarity_clf.classes_))
     print("Accuracy Polaridad: ",accuracy)
     print("Precision Polaridad:",precision)
     print("Recall Polaridad:   ",recall)
@@ -728,6 +772,11 @@ if best_model_representation_Atraction[0][1] == 'Binarizada':
     recall = median(recall)
     F_Measure = median(F_Measure)
     precision = median(precision)
+    cm = confusion_matrix(y_test_atraccion_binario, Test_results,labels= Atraction_clf.classes_)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=Atraction_clf.classes_)
+    disp.plot()
+    plt.show()
+    print(classification_report(y_test_atraccion_binario, Test_results,labels= Atraction_clf.classes_))
     print("Accuracy Polaridad: ",accuracy)
     print("Precision Polaridad:",precision)
     print("Recall Polaridad:   ",recall)
@@ -745,6 +794,11 @@ else:
     recall = median(recall)
     F_Measure = median(F_Measure)
     precision = median(precision)
+    cm = confusion_matrix(y_test_atraccion_frecuencia, Test_results,labels= Atraction_clf.classes_)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=Atraction_clf.classes_)
+    disp.plot()
+    plt.show()
+    print(classification_report(y_test_atraccion_frecuencia, Test_results,labels= Atraction_clf.classes_))
     print("Accuracy Polaridad: ",accuracy)
     print("Precision Polaridad:",precision)
     print("Recall Polaridad:   ",recall)
